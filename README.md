@@ -34,10 +34,10 @@ Distributed under the terms of the MIT license.
 
 Requirements
 ------------
-buildchart has been tested with [`sbcl`](https://www.sbcl.org/) and
-uses [`ocicl`](https://github.com/ocicl/ocicl) for dependency
-management.  Run `ocicl install` to download dependencies, and `make`
-to build.
+`buildchart-ag` has been tested on Linux with
+[`sbcl`](https://www.sbcl.org/) and uses
+[`ocicl`](https://github.com/ocicl/ocicl) for dependency management.
+Run `ocicl install` to download dependencies, and `make` to build.
 
 Sample Output
 -------------
