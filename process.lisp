@@ -30,10 +30,11 @@
 
 (defun dump-jt (indent jt)
   (loop for i from 0 to indent do (format t "  "))
-  (format t "~A[~A] ~A~%"
+  (format t "~A[~A] ~A (~A)~%"
           (slot-value jt 'node-id)
           (slot-value jt 'parent-id)
-          (slot-value jt 'description))
+          (slot-value jt 'description)
+          (slot-value jt 'duration))
   (let ((c (slot-value jt 'children)))
     (when c
       (progn
@@ -47,10 +48,11 @@
 (defparameter +scan-log-entry+ "\\[([^\\]]+)\\] (.*)$")
 
 (defun fix-duration (tlist)
-  (if (cdr tlist)
-      (setf (slot-value (car tlist) 'duration)
-            (abs (local-time:timestamp-difference (slot-value (car tlist) 'start-time)
-                                                  (fix-duration (cdr tlist))))))
+  (when (and (eq -1 (slot-value (car tlist) 'duration))
+             (cdr tlist))
+    (setf (slot-value (car tlist) 'duration)
+          (abs (local-time:timestamp-difference (slot-value (car tlist) 'start-time)
+                                                (fix-duration (cdr tlist))))))
   (slot-value (car tlist) 'start-time))
 
 (defun clean-up-tasks (start-time tasks)
@@ -343,5 +345,9 @@
     (let ((start-time (slot-value (car jenkins-tasks) 'start-time)))
       (dolist (task jenkins-tasks)
         (set-offset-seconds start-time task)))
+
+    (when *verbose*
+      (dolist (jt jenkins-tasks)
+        (dump-jt 0 jt)))
 
     (draw jenkins-tasks)))
