@@ -41,8 +41,21 @@ Run `ocicl install` to download dependencies, and `make` to build.
 
 Sample Output
 -------------
+Here's sample output that shows kubernetes events overlayed on the
+Jenkins events.  Note that the shaded rectangles represent nested
+elements in Jenkins.  The darker the box, the deeper the nesting.
+This makes it easy to quickly identify the section that you are
+looking at.
 
 ![alt text](./test/example.svg)
+
+This next example shows a visualization of parallel Jenkins tasks. In
+every case you must feed `buildchart-ag` the full HTML console output
+from the Jenkins web UI.  This example was built from
+https://ci.jenkins.io/job/Core/job/jenkins/job/master/5558/consoleFull.
+This also shows full timestamps enabled via the `-t` option.
+
+![alt text](./test/jco.svg)
 
 Author
 ------
